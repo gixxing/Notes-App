@@ -1,17 +1,32 @@
 import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCreate, closeEditing } from "../features/ui/uiSlice";
+import { addNote, updateNote } from "../features/notes/notesSlice";
 
-const CreateNote = ({ closeModal, onSubmit, note}) => {
+const CreateNote = () => {
+
+  const isEditing = useSelector((state) => state.ui.isEditing);
+  const note = useSelector((state) => state.ui.selectedNote);
+
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [color, setColor] = useState("")
+  const [color, setColor] = useState("");
 
   useEffect(() => {
     setTitle(note ? note.title : "");
     setContent(note ? note.content : "");
     setColor(note?.color ?? "violet");
-  },[])
+  },[note])
+
+  const handleCancel = () => {
+    if(isEditing) 
+      dispatch(closeEditing());
+    else 
+      dispatch(closeCreate());
+  }
 
   const newNote = (e) => {
     e.preventDefault();
@@ -26,12 +41,15 @@ const CreateNote = ({ closeModal, onSubmit, note}) => {
       createdAt: note?.createdAt ?? new Date().toISOString(),
     }
 
-    onSubmit(updatedNote);
+    if(isEditing)
+       dispatch(updateNote(updatedNote));
+    else
+      dispatch(addNote(updatedNote));
 
     setTitle("");
     setContent("");
 
-    closeModal();
+    handleCancel();
   };
 
   return (
@@ -41,7 +59,7 @@ const CreateNote = ({ closeModal, onSubmit, note}) => {
           
            <div className="flex items-center justify-between w-11/12 px-1">
             <p className="font-bold text-xl">New Note</p>
-            <button onClick={closeModal} className="cursor-pointer">
+            <button onClick={handleCancel} className="cursor-pointer">
               <X size={25} strokeWidth={2.25} />
             </button>
            </div>
@@ -51,7 +69,7 @@ const CreateNote = ({ closeModal, onSubmit, note}) => {
               type="text"
               placeholder="title"
               value={title}
-              className="w-full border-2 rounded-md border-gray-300 py-1 px-2 my-1 focus:outline-none  focus:ring-1 focus:border-violet-500"
+              className="w-full border-2 rounded-md border-gray-300 py-1 px-2 my-1 focus:outline-none focus:ring-1 focus:border-violet-500"
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -66,7 +84,7 @@ const CreateNote = ({ closeModal, onSubmit, note}) => {
           </div>
 
           <div className="flex gap-2 mt-1 mb-4">
-            <button className="bg-amber-200 w-7 h-7 text-amber-200 cursor-pointer  rounded-full"
+            <button className="bg-amber-200 w-7 h-7 text-amber-200 cursor-pointer rounded-full"
               type="button"
               onClick={() => setColor("yellow")}
             >
@@ -114,7 +132,7 @@ const CreateNote = ({ closeModal, onSubmit, note}) => {
             <button
               type="button"
               className="cursor-pointer py-2 px-5 bg-gray-50 border-2 border-gray-300 font-semibold rounded-xl"
-              onClick={closeModal}
+              onClick={handleCancel}
             >
               cancel
             </button>

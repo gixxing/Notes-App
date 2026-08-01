@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
-import CreateNote from './CreateNote';
-
 
 function Sidebar() {
-
-
 
   return (
     <div className="flex justify-between sm:flex-col w-full border-b mx-5 sm:border-none sm:my-5">

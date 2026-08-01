@@ -1,9 +1,13 @@
 import { CircleX, NotebookText, Plus, Search } from 'lucide-react'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { openCreate } from '../features/ui/uiSlice';
 
 function Header({openModal}) {
 
   const [isSearching, setIsSearching] = useState(false) ;
+
+  const dispatch = useDispatch();
 
   return (
     <div className="flex items-center px-2 sm:px-5 py-4 border-b-2 border-gray-300">
@@ -14,10 +18,10 @@ function Header({openModal}) {
 
       <div className="flex-1 flex justify-end sm:justify-center">
         {/* for Desktop/tab */}
-        <div className="hidden sm:flex  border border-slate-600 rounded-2xl items-center mx-4 sm:w-80 lg:w-xl px-2 ">
+        <div className="hidden sm:flex  border border-slate-600 rounded-2xl items-center mx-4 w-80 lg:w-xl px-2 ">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
             className={`focus:outline-none flex-1 ml-2 py-2`}
           />
           <Search size={20} color="#000000" strokeWidth={1.75} />
@@ -26,7 +30,7 @@ function Header({openModal}) {
         {/* for Mobile */}
         <div className='sm:hidden relative flex items-center justify-end w-full'>
           <input type="text" 
-                placeholder="Search ..."
+                placeholder="Search..."
                 className={`${isSearching? "flex flex-1" : "hidden"} focus:outline-none border rounded-2xl z-50 backdrop-blur-md shadow-sm py-2 px-3 ml-2`}
           />
           <button className="px-4 cursor-pointer"
@@ -46,7 +50,7 @@ function Header({openModal}) {
         <div>
           <button
             className="cursor-pointer bg-violet-500 p-2 text-white rounded-full mr-4"
-            onClick={openModal}
+            onClick={() => dispatch(openCreate())}
           >
             <Plus size={30} color="#f3f2f2" strokeWidth={2.5} />
           </button>

@@ -1,29 +1,25 @@
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { openEditing, openView } from "../features/ui/uiSlice";
+import { deleteNote } from "../features/notes/notesSlice";
+import { NOTE_COLORS } from "../constants/noteColors";
 
-const NoteCard = ({ note, openEditing, deleteNote, openViewNote }) => {
+const NoteCard = ({ note }) => {
+
+  const dispatch = useDispatch();
+
   const [showMenu, setShowMenu] = useState(false);
-
-  const colors = {
-    green: "bg-green-300",
-    violet: "bg-fuchsia-300",
-    yellow: "bg-amber-200",
-    cyan: "bg-cyan-200",
-    pink: "bg-pink-200",
-    gray: "bg-gray-300",
-    indigo: "bg-indigo-200",
-  };
 
   return (
     <>
       <div
-        className={`w-full ${colors[note.color]} rounded-xl h-full flex sm:flex-col justify-between relative`}
+        className={`w-full ${NOTE_COLORS[note.color]} rounded-xl h-full flex sm:flex-col justify-between relative`}
+        onClick={() => dispatch(openView(note))}
       >
-        <div className="flex flex-1 flex-col overflow-hidden mx-5 my-3 gap-4"
-           onClick={() => openViewNote(note)}
-        >
+        <div className="flex flex-1 flex-col overflow-hidden mx-5 my-3 gap-4">
           <div
-            className="font-bold py-3.5 "
+            className="font-bold py-3.5"
           >
             <p className="truncate sm:overflow-visible sm:whitespace-normal sm:wrap-break-word text-gray-700">
               {note.title}
@@ -41,26 +37,34 @@ const NoteCard = ({ note, openEditing, deleteNote, openViewNote }) => {
           {new Date(note.createdAt).toLocaleDateString()}
           <button
             className="cursor-pointer"
-            onClick={() => setShowMenu((prev) => !prev)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu((prev) => !prev)
+            }}
           >
             <EllipsisVertical size={22} />
           </button>
         </div>
 
         {showMenu && (
-          <div className="absolute bottom-3  right-8 sm:right-9 bg-white flex gap-3 rounded-lg shadow-2xl px-3 py-1 z-50">
+          <div className="absolute bottom-3 right-8 sm:right-9 bg-white flex gap-3 rounded-lg shadow-2xl px-3 py-1 z-50">
             <button
               className="cursor-pointer text-violet-500"
-              onClick={() => {
-                openEditing(note);
+              onClick={(e) => {
+                e.stopPropagation();
                 setShowMenu(false);
+                dispatch(openEditing(note));
               }}
             >
               <Pencil size={20} strokeWidth={1.75} />
             </button>
             <button
               className="cursor-pointer text-red-500"
-              onClick={() => deleteNote(note.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenu(false);
+                dispatch(deleteNote(note.id));
+              }}
             >
               <Trash2 size={20} strokeWidth={1.75} />
             </button>
