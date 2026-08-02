@@ -1,32 +1,36 @@
-import { X } from "lucide-react";
+import { Pin, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreate, closeEditing } from "../features/ui/uiSlice";
 import { addNote, updateNote } from "../features/notes/notesSlice";
+import { NOTE_COLORS } from "../constants/noteColors";
 
 const CreateNote = () => {
-
+  
   const isEditing = useSelector((state) => state.ui.isEditing);
-  const note = useSelector((state) => state.ui.selectedNote);
+  const selectedNoteId = useSelector((state) => state.ui.selectedNoteId);
+  const note = useSelector((state) =>
+    state.notes.notes.find((n) => n.id === selectedNoteId),
+  );
 
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("violet");
+  const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
     setTitle(note ? note.title : "");
     setContent(note ? note.content : "");
     setColor(note?.color ?? "violet");
-  },[note])
+    setPinned(note?.pinned ?? false);
+  }, [note]);
 
   const handleCancel = () => {
-    if(isEditing) 
-      dispatch(closeEditing());
-    else 
-      dispatch(closeCreate());
-  }
+    if (isEditing) dispatch(closeEditing());
+    else dispatch(closeCreate());
+  };
 
   const newNote = (e) => {
     e.preventDefault();
@@ -34,17 +38,16 @@ const CreateNote = () => {
     if (!title.trim() || !content.trim()) return;
 
     const updatedNote = {
-      id : note?.id ?? crypto.randomUUID(),
+      id: note?.id ?? crypto.randomUUID(),
       title: title.trim(),
-      content: content.trim(), 
-      color: color,
+      content: content.trim(),
+      color,
+      pinned,
       createdAt: note?.createdAt ?? new Date().toISOString(),
-    }
+    };
 
-    if(isEditing)
-       dispatch(updateNote(updatedNote));
-    else
-      dispatch(addNote(updatedNote));
+    if (isEditing) dispatch(updateNote(updatedNote));
+    else dispatch(addNote(updatedNote));
 
     setTitle("");
     setContent("");
@@ -56,13 +59,18 @@ const CreateNote = () => {
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end justify-center z-50">
       <div className="bg-white rounded-xl py-9 w-11/12 max-w-lg mb-4 pl-9">
         <form onSubmit={newNote}>
-          
-           <div className="flex items-center justify-between w-11/12 px-1">
-            <p className="font-bold text-xl">New Note</p>
-            <button onClick={handleCancel} className="cursor-pointer">
+          <div className="flex items-center justify-between w-11/12 px-1">
+            <p className="font-bold text-xl">
+              {isEditing? "Edit Note": "New Note" }
+            </p>
+            <button 
+              onClick={handleCancel} 
+              type="button"
+              className="cursor-pointer"
+            >
               <X size={25} strokeWidth={2.25} />
             </button>
-           </div>
+          </div>
 
           <div className="w-11/12 mt-4">
             <input
@@ -83,48 +91,28 @@ const CreateNote = () => {
             ></textarea>
           </div>
 
-          <div className="flex gap-2 mt-1 mb-4">
-            <button className="bg-amber-200 w-7 h-7 text-amber-200 cursor-pointer rounded-full"
+          <div className="flex items-center justify-between w-11/12 px-1 my-2">
+            <div className="flex gap-2 mt-1 mb-4">
+              {Object.entries(NOTE_COLORS).map(([currColor, bgClass]) => (
+                <button
+                  key={currColor}
+                  type="button"
+                  className={`${bgClass} w-7 h-7 rounded-full cursor-pointer ${
+                    color === currColor ? "ring-2 ring-black ring-offset-2" : ""
+                  }`}
+                  onClick={() => setColor(currColor)}
+                />
+              ))}
+            </div>
+
+            <button
               type="button"
-              onClick={() => setColor("yellow")}
+              className={`cursor-pointer ${
+                pinned ? "text-violet-500" : "text-black"
+              }`}
+              onClick={() => setPinned((prev) => !prev)}
             >
-              .
-            </button>
-            <button className="bg-green-300 w-7 h-7 text-green-300 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("green")}
-            >
-              .
-            </button>
-            <button className="bg-fuchsia-300 w-7 h-7 text-fuchsia-300 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("violet")}
-            >
-              .
-            </button>
-            <button className="bg-cyan-200 w-7 h-7 text-cyan-200 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("cyan")}
-            >
-              .
-            </button>
-            <button className="bg-pink-200 w-7 h-7 text-pink-200 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("pink")}
-            >
-              .
-            </button>
-            <button className="bg-gray-300 w-7 h-7 text-gray-300 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("gray")}
-            >
-              .
-            </button>
-            <button className="bg-indigo-200 w-7 h-7 text-indigo-200 cursor-pointer  rounded-full"
-              type="button"
-              onClick={() => setColor("indigo")}
-            >
-              .
+              <Pin size={25} strokeWidth={2} />
             </button>
           </div>
 
@@ -140,7 +128,7 @@ const CreateNote = () => {
               type="submit"
               className="cursor-pointer bg-violet-500 py-2 px-7 text-white font-semibold rounded-xl"
             >
-              Save
+              {isEditing? "Update" : "Create"}
             </button>
           </div>
         </form>

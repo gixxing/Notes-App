@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Search } from "lucide-react";
 
 const initialState = {
     isOpen: false,
     isViewing: false,
     isEditing: false,
-    selectedNote: null,
+    searchQuery: "",
+    menu: false,
+    selectedNoteId: null,
 };
 
 const uiSlice = createSlice({
@@ -23,22 +26,30 @@ const uiSlice = createSlice({
         openEditing: (state, action) => {
             state.isOpen = true;
             state.isEditing = true;
-            state.selectedNote = action.payload;
+            state.selectedNoteId = action.payload;
         },
         closeEditing: (state) => {
             state.isOpen = false;
             state.isEditing = false;
-            state.selectedNote = null;
+            state.selectedNoteId = null;
         },
 
         openView: (state, action) => {
             state.isViewing = true;
-            state.selectedNote = action.payload;
+            state.selectedNoteId = action.payload;
         },
         closeView: (state) => {
             state.isViewing = false;
-            state.selectedNote = null;
+            state.selectedNoteId = null;
         },
+
+        openSearch: (state, action) => {
+            state.searchQuery = action.payload;
+        },
+
+        toggleMenu: (state) => {
+            state.menu = !state.menu;
+        }
     },
 });
 
@@ -47,6 +58,9 @@ export const { openCreate,
                openEditing,
                closeEditing,
                openView,
-               closeView, }  = uiSlice.actions;
+               closeView,
+               openSearch,
+               toggleMenu, 
+            }  = uiSlice.actions;
 
 export default uiSlice.reducer;

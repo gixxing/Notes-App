@@ -25,11 +25,19 @@ const notesSlice = createSlice({
         ? action.payload
         : note
       );
-
     },
+
+    setPinned: (state, action) => {
+      const note = state.notes.find( note =>
+        note.id === action.payload
+      );
+      if(note){
+        note.pinned = !note.pinned;
+      }
+    }
   }
 });
 
-export const { addNote, deleteNote, updateNote } = notesSlice.actions;
+export const { addNote, deleteNote, updateNote, setPinned } = notesSlice.actions;
 
 export default notesSlice.reducer;

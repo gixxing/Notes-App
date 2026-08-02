@@ -1,19 +1,22 @@
-import { CalendarDays, Pencil, Trash2, X } from "lucide-react";
+import { CalendarDays, Pencil, Pin, Trash2, X } from "lucide-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeView, openEditing } from "../features/ui/uiSlice";
-import { deleteNote } from "../features/notes/notesSlice";
+import { deleteNote, setPinned } from "../features/notes/notesSlice";
 
 const ViewNote = () => {
 
-  const note = useSelector((state) => state.ui.selectedNote);
+  const selectedNoteId = useSelector((state) => state.ui.selectedNoteId);
+  const note = useSelector((state) => 
+    state.notes.notes.find(n => n.id === selectedNoteId)
+  );
   if(!note) return null;
 
   const dispatch = useDispatch();
 
   const handleEdit = () => {
     dispatch(closeView());
-    dispatch(openEditing(note));
+    dispatch(openEditing(note.id));
   };
 
   const handleDelete = () => {
@@ -35,8 +38,18 @@ const ViewNote = () => {
           </div>
 
           <div className="border-b-2 pb-7">
-            <div className="my-5">
-              <p className="text-3xl font-bold wrap-break-word">{note.title}</p>
+            <div className="flex justify-between items-center my-5">
+              <div className="">
+                <p className="text-3xl font-bold wrap-break-word">{note.title}</p>
+              </div>
+              {
+                <button 
+                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                  onClick={() => dispatch(setPinned(note.id))}
+                >
+                  <Pin size={30} strokeWidth={2}/>
+                </button>
+              }
             </div>
             <div className="flex gap-3 items-center ">
               <CalendarDays size={18} strokeWidth={1.75} />
