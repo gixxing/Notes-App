@@ -39,14 +39,14 @@ function App() {
   return (
     <>
       <div className="h-screen flex flex-col ">
-        <div className="min-h-1/10 max-h-1/10 w-full z-30">
+        <div className="w-full z-30">
           <Header />
         </div>
         <div className="flex flex-1">
           <div className={`hidden sm:flex flex-col md:w-1/5 lg:w-56 sm:border-r-2 border-gray-300 py-3`}>
             <Sidebar />
           </div>
-          <div className="flex flex-1 flex-col m-2">
+          <div className="flex flex-1 min-w-0 flex-col m-2">
             {
               searchQuery === ""
               ? <Outlet />

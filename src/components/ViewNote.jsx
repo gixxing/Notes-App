@@ -45,17 +45,17 @@ const ViewNote = () => {
 
           <div className="border-b-2 pb-7">
             <div className="flex justify-between items-center my-5">
-              <div className="">
+              <div className="flex-1 min-w-0 mr-2">
                 <p className="text-3xl font-bold wrap-break-word">{note.title}</p>
               </div>
-              {
-                <button 
-                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
-                  onClick={() => dispatch(setPinned(note.id))}
-                >
-                  <Pin size={30} strokeWidth={2}/>
-                </button>
-              }
+
+              <button 
+                className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                onClick={() => dispatch(setPinned(note.id))}
+              >
+                <Pin size={30} strokeWidth={2}/>
+              </button>
+              
             </div>
             <div className="flex gap-3 items-center ">
               <CalendarDays size={18} strokeWidth={1.75} />

@@ -16,11 +16,13 @@ const SearchNote = ({ searchQuery }) => {
     <>
       <div className="w-full">
         <div className="flex justify-between m-5 font-semibold text-xl">
-          <div className="flex truncate">
-            <p>Search results for '</p>
+          <div className="flex flex-1 min-w-0">
+            <p className="shrink-0">Search results for '</p>
             <p className="text-violet-500 truncate">{searchQuery}'</p>
           </div>
-          <div className="text-gray-500 truncate">{filteredNotes.length} notes found</div>
+          <div className="text-gray-500 shrink-0">
+            {filteredNotes.length} notes found
+          </div>
         </div>
 
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
