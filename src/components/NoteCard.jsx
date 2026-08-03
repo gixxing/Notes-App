@@ -1,11 +1,11 @@
-import { EllipsisVertical, Pencil, Pin, Trash2 } from "lucide-react";
+import { ArchiveRestore, EllipsisVertical, Pencil, Pin, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openEditing, openView } from "../features/ui/uiSlice";
-import { deleteNote, setPinned } from "../features/notes/notesSlice";
+import { deleteNote, deletePermanently, restoreNote, setPinned } from "../features/notes/notesSlice";
 import { NOTE_COLORS } from "../constants/noteColors";
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, deletedCard}) => {
 
   const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const NoteCard = ({ note }) => {
     <>
       <div
         className={`w-full ${NOTE_COLORS[note.color]} rounded-xl h-full flex sm:flex-col justify-between relative`}
-        onClick={() => dispatch(openView(note.id))}
+        onClick={() => !deletedCard && dispatch(openView(note.id))}
       >
         <div className="flex flex-1 flex-col overflow-hidden mx-5 my-3 gap-4">
           <div className="p-3 flex justify-between items-center">
@@ -24,19 +24,18 @@ const NoteCard = ({ note }) => {
                 {note.title}
               </p>
             </div>
-            {
-              note.pinned &&
+            {note.pinned && (
               <button
-                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowMenu(false);
-                    dispatch(setPinned(note.id));
-                  }}
+                className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMenu(false);
+                  dispatch(setPinned(note.id));
+                }}
               >
-                <Pin size={20} strokeWidth={1.75}/>
+                <Pin size={20} strokeWidth={1.75} />
               </button>
-            }
+            )}
           </div>
 
           <div className="hidden sm:block">
@@ -59,36 +58,63 @@ const NoteCard = ({ note }) => {
 
         {showMenu && (
           <div className="absolute bottom-1 right-8 sm:right-9 bg-white flex flex-col gap-3 rounded-lg shadow-2xl px-3 py-1 z-50">
-            <button
-              className="cursor-pointer text-cyan-500"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMenu(false);
-                dispatch(openEditing(note.id));
-              }}
-            >
-              <Pencil size={20} strokeWidth={1.75} />
-            </button>
-            <button
-              className="cursor-pointer text-red-500"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMenu(false);
-                dispatch(deleteNote(note.id));
-              }}
-            >
-              <Trash2 size={20} strokeWidth={1.75} />
-            </button>
-            <button
-              className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMenu(false);
-                dispatch(setPinned(note.id));
-              }}
-            >
-              <Pin size={20} strokeWidth={1.75}/>
-            </button>
+            {deletedCard ? (
+              <>
+                <button
+                  className="cursor-pointer text-violet-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    dispatch(restoreNote(note.id));
+                  }}
+                >
+                  <ArchiveRestore size={20} strokeWidth={1.75} />
+                </button>
+                <button
+                  className="cursor-pointer text-red-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    dispatch(deletePermanently(note.id));
+                  }}
+                >
+                  <Trash2 size={20} strokeWidth={1.75} />
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    dispatch(openEditing(note.id));
+                  }}
+                >
+                  <Pencil size={20} strokeWidth={1.75} />
+                </button>
+                <button
+                  className="cursor-pointer text-red-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    dispatch(deleteNote(note.id));
+                  }}
+                >
+                  <Trash2 size={20} strokeWidth={1.75} />
+                </button>
+                <button
+                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    dispatch(setPinned(note.id));
+                  }}
+                >
+                  <Pin size={20} strokeWidth={1.75} />
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>

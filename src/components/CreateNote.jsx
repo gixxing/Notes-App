@@ -43,6 +43,7 @@ const CreateNote = () => {
       content: content.trim(),
       color,
       pinned,
+      isDeleted: false,
       createdAt: note?.createdAt ?? new Date().toISOString(),
     };
 
@@ -56,8 +57,14 @@ const CreateNote = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end justify-center z-50">
-      <div className="bg-white rounded-xl py-9 w-11/12 max-w-lg mb-4 pl-9">
+    <div 
+      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end justify-center z-50"
+      onClick={handleCancel}
+    >
+      <div 
+        className="bg-white rounded-xl py-9 w-11/12 max-w-lg mb-4 pl-9"
+        onClick={e => e.stopPropagation()}
+      >
         <form onSubmit={newNote}>
           <div className="flex items-center justify-between w-11/12 px-1">
             <p className="font-bold text-xl">

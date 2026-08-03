@@ -6,7 +6,7 @@ const initialState = {
     isViewing: false,
     isEditing: false,
     searchQuery: "",
-    menu: false,
+    isSidebarOpen: false,
     selectedNoteId: null,
 };
 
@@ -47,8 +47,11 @@ const uiSlice = createSlice({
             state.searchQuery = action.payload;
         },
 
-        toggleMenu: (state) => {
-            state.menu = !state.menu;
+        toggleSidebar: (state) => {
+            state.isSidebarOpen = !state.isSidebarOpen;
+        },
+        closeSidebar: (state) => {
+            state.isSidebarOpen = false;
         }
     },
 });
@@ -60,7 +63,8 @@ export const { openCreate,
                openView,
                closeView,
                openSearch,
-               toggleMenu, 
+               toggleSidebar, 
+               closeSidebar,
             }  = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -1,13 +1,12 @@
 import { CircleX, Menu, NotebookText, Plus, Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { openCreate, openSearch, toggleMenu } from '../features/ui/uiSlice';
+import { openCreate, openSearch, toggleSidebar } from '../features/ui/uiSlice';
 
 function Header() {
 
   const [isSearching, setIsSearching] = useState(false) ;
   const [searchInput, setSearchInput] = useState("");
-  const menu = useSelector((state) => state.ui.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,11 +14,11 @@ function Header() {
   }, [searchInput]);
 
   return (
-    <div className="flex items-center px-2 sm:px-5 py-4 border-b-2 border-gray-300">
+    <div className="flex items-center px-2 sm:px-5 py-4 border-b-2 border-gray-300 bg-white">
       <div className={`${isSearching? "hidden" : "flex"} sm:flex p-2 gap-2`}>
         {<button 
           className='sm:hidden cursor-pointer'
-          onClick={() => dispatch(toggleMenu())}
+          onClick={() => dispatch(toggleSidebar())}
         >
           <Menu size={30} strokeWidth={1.5} />
         </button>}

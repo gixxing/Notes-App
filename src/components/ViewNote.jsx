@@ -26,8 +26,14 @@ const ViewNote = () => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/20 backdrop-blur-xs flex items-end justify-center z-50 sm:items-center">
-        <div className="bg-white p-8 rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl">
+      <div 
+        className="fixed inset-0 bg-black/20 backdrop-blur-xs flex items-end justify-center z-50 sm:items-center"
+        onClick={() => dispatch(closeView())}
+      >
+        <div 
+          className="bg-white p-8 rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl"
+          onClick={e => e.stopPropagation()}
+        >
           <div className="flex justify-between mb-9 mx-1">
             <p className="text-2xl font-semibold">Note</p>
             <button 

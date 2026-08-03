@@ -16,7 +16,28 @@ const notesSlice = createSlice({
     },
 
     deleteNote: (state, action) => {
-      state.notes = state.notes.filter((note) => note.id !== action.payload);
+      const note = state.notes.find( (n) => 
+        n.id === action.payload
+      );
+
+      if(note){
+        note.isDeleted = true ;
+        note.pinned = false ;
+      }
+    },
+
+    restoreNote: (state, action) => {
+      const note = state.notes.find( (n) => 
+        n.id === action.payload
+      );
+
+      if(note){
+        note.isDeleted = false ;
+      }
+    },
+
+    deletePermanently: (state, action) => {
+      state.notes = state.notes.filter((note) => note.id !== action.payload)
     },
 
     updateNote: (state, action) => {
@@ -28,8 +49,8 @@ const notesSlice = createSlice({
     },
 
     setPinned: (state, action) => {
-      const note = state.notes.find( note =>
-        note.id === action.payload
+      const note = state.notes.find( (n) =>
+        n.id === action.payload
       );
       if(note){
         note.pinned = !note.pinned;
@@ -38,6 +59,13 @@ const notesSlice = createSlice({
   }
 });
 
-export const { addNote, deleteNote, updateNote, setPinned } = notesSlice.actions;
+export const { 
+  addNote, 
+  deleteNote,
+  updateNote, 
+  setPinned,
+  restoreNote,
+  deletePermanently,
+ } = notesSlice.actions;
 
 export default notesSlice.reducer;

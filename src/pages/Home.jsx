@@ -1,27 +1,33 @@
 import React from 'react'
-import {Notes} from './Notes'
+import {Notes} from '../components/Notes'
 import { NotebookPen, Plus } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { openCreate } from '../features/ui/uiSlice'
+import { closeSidebar, openCreate } from '../features/ui/uiSlice'
 
 const Home = () => {
 
-  const notes = useSelector((state) => state.notes.notes);
+  const notes = useSelector((state) => state.notes.notes)
+                  .filter((note) => !note.isDeleted);
+
+  const sortedNotes = [...notes].sort((a, b) => b.pinned - a.pinned);
+
   const dispatch = useDispatch();
+
+  dispatch(closeSidebar());
 
   return (
     <div className='w-full flex flex-1 flex-col relative'>
-      { notes.length > 0 &&
+      { sortedNotes.length > 0 &&
         <div className='m-5'>
-        <p className='hidden sm:block text-xl font-semibold'>
+        <p className='block text-xl font-semibold'>
           All Notes
         </p>
       </div>}
       <div className='w-full flex flex-col flex-1'>
         {
-          notes.length > 0
+          sortedNotes.length > 0
           ? 
-            <Notes />
+            <Notes notes={sortedNotes} />
           : <div className='flex flex-1 flex-col justify-center items-center gap-3'>
               <NotebookPen size={110} color="#8B5CF6" strokeWidth={2} />
               <p className='font-bold text-2xl'>No Notes Yet</p>

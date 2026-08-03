@@ -3,7 +3,8 @@ import NoteCard from "./NoteCard";
 import { useSelector } from "react-redux";
 
 const SearchNote = ({ searchQuery }) => {
-  const notes = useSelector((state) => state.notes.notes);
+  const notes = useSelector((state) => state.notes.notes)
+                  .filter((n) => !n.isDeleted);
 
   const filteredNotes = notes.filter(
     (note) =>
