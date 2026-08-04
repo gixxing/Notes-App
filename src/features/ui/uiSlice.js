@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Search } from "lucide-react";
+import { loadTheme } from "../../utils/localStorage";
 
 const initialState = {
     isOpen: false,
@@ -7,8 +8,8 @@ const initialState = {
     isEditing: false,
     searchQuery: "",
     isSidebarOpen: false,
-    theme: "light",
     selectedNoteId: null,
+    theme: loadTheme(),
 };
 
 const uiSlice = createSlice({
