@@ -16,19 +16,19 @@ const Home = () => {
   dispatch(closeSidebar());
 
   return (
-    <div className='w-full flex flex-1 flex-col relative'>
+    <div className='w-full flex flex-1 flex-col relative '>
       { sortedNotes.length > 0 &&
         <div className='m-5'>
-        <p className='block text-xl font-semibold'>
-          All Notes
-        </p>
-      </div>}
+          <p className='block text-xl font-semibold dark:text-gray-300'>
+            All Notes
+          </p>
+        </div>}
       <div className='w-full flex flex-col flex-1'>
         {
           sortedNotes.length > 0
           ? 
             <Notes notes={sortedNotes} />
-          : <div className='flex flex-1 flex-col justify-center items-center gap-3'>
+          : <div className='flex flex-1 flex-col justify-center items-center gap-3 dark:text-gray-300'>
               <NotebookPen size={110} color="#8B5CF6" strokeWidth={2} />
               <p className='font-bold text-2xl'>No Notes Yet</p>
               <p className='text-xl text-gray-500'>Click the "+" button to create your first note.</p>

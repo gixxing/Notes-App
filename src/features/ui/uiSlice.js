@@ -7,6 +7,7 @@ const initialState = {
     isEditing: false,
     searchQuery: "",
     isSidebarOpen: false,
+    theme: "light",
     selectedNoteId: null,
 };
 
@@ -52,6 +53,10 @@ const uiSlice = createSlice({
         },
         closeSidebar: (state) => {
             state.isSidebarOpen = false;
+        },
+
+        setTheme: (state, action) => {
+            state.theme = action.payload;
         }
     },
 });
@@ -65,6 +70,7 @@ export const { openCreate,
                openSearch,
                toggleSidebar, 
                closeSidebar,
+               setTheme,
             }  = uiSlice.actions;
 
 export default uiSlice.reducer;

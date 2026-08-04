@@ -15,7 +15,7 @@ const SearchNote = ({ searchQuery }) => {
   return (
     <>
       <div className="w-full">
-        <div className="flex justify-between m-5 font-semibold text-xl">
+        <div className="flex justify-between m-5 font-semibold text-xl dark:text-gray-300">
           <div className="flex flex-1 min-w-0">
             <p className="shrink-0">Search results for '</p>
             <p className="text-violet-500 truncate">{searchQuery}'</p>

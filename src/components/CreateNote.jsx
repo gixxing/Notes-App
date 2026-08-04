@@ -62,24 +62,24 @@ const CreateNote = () => {
       onClick={handleCancel}
     >
       <div 
-        className="bg-white rounded-xl py-9 w-11/12 max-w-lg mb-4 pl-9"
+        className="bg-white rounded-xl py-9 w-11/12 max-w-lg mb-4 pl-9 dark:bg-slate-900"
         onClick={e => e.stopPropagation()}
       >
         <form onSubmit={newNote}>
           <div className="flex items-center justify-between w-11/12 px-1">
-            <p className="font-bold text-xl">
+            <p className="font-bold text-xl dark:text-gray-300">
               {isEditing? "Edit Note": "New Note" }
             </p>
             <button 
               onClick={handleCancel} 
               type="button"
-              className="cursor-pointer"
+              className="cursor-pointer dark:text-gray-300"
             >
               <X size={25} strokeWidth={2.25} />
             </button>
           </div>
 
-          <div className="w-11/12 mt-4">
+          <div className="w-11/12 mt-4 dark:text-gray-300">
             <input
               type="text"
               placeholder="title"
@@ -88,7 +88,7 @@ const CreateNote = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="w-11/12">
+          <div className="w-11/12 dark:text-gray-300">
             <textarea
               rows="8"
               placeholder="content"
@@ -115,8 +115,8 @@ const CreateNote = () => {
             <button
               type="button"
               className={`cursor-pointer ${
-                pinned ? "text-violet-500" : "text-black"
-              }`}
+                pinned ? "text-violet-500" : "text-black dark:text-gray-300"
+              } `}
               onClick={() => setPinned((prev) => !prev)}
             >
               <Pin size={25} strokeWidth={2} />
@@ -126,7 +126,7 @@ const CreateNote = () => {
           <div className="flex justify-around">
             <button
               type="button"
-              className="cursor-pointer py-2 px-5 bg-gray-50 border-2 border-gray-300 font-semibold rounded-xl"
+              className="cursor-pointer py-2 px-5 dark:bg-gray-500 bg-gray-400 border-2 border-gray-500 font-semibold rounded-xl"
               onClick={handleCancel}
             >
               cancel

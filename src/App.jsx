@@ -14,6 +14,7 @@ function App() {
   const isViewing = useSelector((state) => state.ui.isViewing);  
   const searchQuery = useSelector((state) => state.ui.searchQuery);
   const isSidebarOpen = useSelector((state) => state.ui.isSidebarOpen);
+  const theme = useSelector((state) => state.ui.theme);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,14 +37,19 @@ function App() {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    document.querySelector('html').classList.remove("light","dark");
+    document.querySelector('html').classList.add(theme);
+  },[theme])
+
   return (
     <>
       <div className="h-screen flex flex-col ">
         <div className="w-full z-30">
           <Header />
         </div>
-        <div className="flex flex-1">
-          <div className={`hidden sm:flex flex-col md:w-1/5 lg:w-56 sm:border-r-2 border-gray-300 py-3`}>
+        <div className="flex flex-1 dark:bg-slate-950">
+          <div className={`hidden sm:flex flex-col md:w-1/5 lg:w-56 sm:border-r-2 sm:dark:border-r border-gray-300 py-3`}>
             <Sidebar />
           </div>
           <div className="flex flex-1 min-w-0 flex-col m-2">
@@ -58,11 +64,11 @@ function App() {
           {
             isSidebarOpen &&
             <div 
-              className="fixed inset-0 backdrop-blur-sm z-50 bg-black/30"
+              className="fixed inset-0 backdrop-blur-sm z-50 bg-black/30 "
               onClick={() => dispatch(closeSidebar())}
             >
               <div 
-                className={`w-64 h-full bg-white transition-transform duration-500 ${isSidebarOpen?"translate-x-0":"-translate-x-full"}`}
+                className={`w-64 h-full dark:bg-slate-950 bg-white transition-transform duration-500 ${isSidebarOpen?"translate-x-0":"-translate-x-full"}`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <Sidebar />

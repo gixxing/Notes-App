@@ -14,10 +14,10 @@ const Pinned = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className='w-full flex flex-1 flex-col relative'>
+    <div className='w-full flex flex-1 flex-col relative '>
       { pinnedNotes.length > 0 &&
         <div className='m-5'>
-        <p className='block text-xl font-semibold'>
+        <p className='block text-xl font-semibold dark:text-gray-300'>
           Pinned Notes
         </p>
       </div>}
@@ -28,7 +28,7 @@ const Pinned = () => {
             <Notes notes={pinnedNotes} />
           : <div className='flex flex-1 flex-col justify-center items-center gap-3'>
               <PinOff size={110} color="#8B5CF6" strokeWidth={2} />
-              <p className='font-bold text-2xl'>No Pinned Notes</p>
+              <p className='font-bold text-2xl dark:text-gray-300'>No Pinned Notes</p>
             </div>
           
         }

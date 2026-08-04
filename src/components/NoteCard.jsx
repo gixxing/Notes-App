@@ -57,7 +57,7 @@ const NoteCard = ({ note, deletedCard}) => {
         </div>
 
         {showMenu && (
-          <div className="absolute bottom-1 right-8 sm:right-9 bg-white flex flex-col gap-3 rounded-lg shadow-2xl px-3 py-1 z-50">
+          <div className="absolute bottom-1 right-8 sm:right-9 bg-white flex flex-col gap-3 rounded-lg shadow-2xl px-3 py-1 z-50 dark:bg-slate-900">
             {deletedCard ? (
               <>
                 <button
@@ -84,7 +84,7 @@ const NoteCard = ({ note, deletedCard}) => {
             ) : (
               <>
                 <button
-                  className="cursor-pointer"
+                  className="cursor-pointer text-blue-400"
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowMenu(false);
@@ -104,7 +104,7 @@ const NoteCard = ({ note, deletedCard}) => {
                   <Trash2 size={20} strokeWidth={1.75} />
                 </button>
                 <button
-                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                  className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black dark:text-gray-300"}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowMenu(false);

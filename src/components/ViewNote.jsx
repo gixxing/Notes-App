@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeView, openEditing } from "../features/ui/uiSlice";
 import { deleteNote, setPinned } from "../features/notes/notesSlice";
+import { NOTE_COLORS } from "../constants/noteColors";
 
 const ViewNote = () => {
 
@@ -31,7 +32,7 @@ const ViewNote = () => {
         onClick={() => dispatch(closeView())}
       >
         <div 
-          className="bg-white p-8 rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl"
+          className={`${NOTE_COLORS[note.color]} p-8 rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl `}
           onClick={e => e.stopPropagation()}
         >
           <div className="flex justify-between mb-9 mx-1">

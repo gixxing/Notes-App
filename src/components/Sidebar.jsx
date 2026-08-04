@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSidebar, toggleSidebar } from '../features/ui/uiSlice';
-import { Menu } from 'lucide-react';
+import { Menu} from 'lucide-react';
 import { NavLink } from 'react-router';
 
 function Sidebar() {
@@ -10,9 +10,9 @@ function Sidebar() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex justify-between flex-col w-full gap-4">
+    <div className="flex justify-between flex-col w-full gap-4 ">
       {isSidebarOpen && (
-        <div className='flex gap-2 border-b-2 border-gray-300 py-5 pl-3'>
+        <div className='flex gap-2 border-b-2 dark:border-b dark:text-gray-300 border-gray-300 py-5 pl-3'>
           <button
             className="cursor-pointer"
             onClick={() => dispatch(toggleSidebar())}
