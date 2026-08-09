@@ -47,6 +47,10 @@ const notesSlice = createSlice({
       state.notes = state.notes.filter((note) => note.id !== action.payload)
     },
 
+    clearTrash: (state) => {
+      state.notes = state.notes.filter((note) => !note.isDeleted)
+    },
+
     updateNote: (state, action) => {
      state.notes = state.notes.map(note => 
         note.id === action.payload.id
@@ -74,6 +78,7 @@ export const {
   restoreNote,
   deletePermanently,
   deleteAllNotes,
+  clearTrash,
  } = notesSlice.actions;
 
 export default notesSlice.reducer;

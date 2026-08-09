@@ -2,6 +2,7 @@ import React from 'react'
 import {Notes} from '../components/Notes'
 import { Trash2 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
+import { clearTrash } from '../features/notes/notesSlice'
 
 const Trash = () => {
 
@@ -31,6 +32,17 @@ const Trash = () => {
           
         }
       </div>
+      { deletedNotes.length > 0 &&
+        <div className='fixed bottom-5 right-5'>
+          <button 
+            onClick={() => dispatch(clearTrash())}
+            className='flex items-center gap-1 text-red-500 bg-white border-2 dark:bg-slate-800 dark:border-none py-2 px-4 rounded-xl cursor-pointer'
+          >
+            <Trash2 size={20} strokeWidth={1.25} />
+            Clear Trash
+          </button>
+        </div>
+      }
     </div>
   )
 }
