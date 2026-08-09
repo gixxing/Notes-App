@@ -32,10 +32,10 @@ const ViewNote = () => {
         onClick={() => dispatch(closeView())}
       >
         <div 
-          className={`${NOTE_COLORS[note.color]} p-8 rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl `}
+          className={`${NOTE_COLORS[note.color]} p-8 max-h-[90vh] rounded-xl w-full mx-1 sm:mx-0 sm:w-xl lg:w-2xl`}
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex justify-between mb-9 mx-1">
+          <div className="flex justify-between mb-3 mx-1">
             <p className="text-2xl font-semibold">Note</p>
             <button 
                 className="cursor-pointer" 
@@ -44,8 +44,8 @@ const ViewNote = () => {
             </button>
           </div>
 
-          <div className="border-b-2 pb-7">
-            <div className="flex justify-between items-center my-5">
+          <div className="border-b-2 pb-1">
+            <div className="flex justify-between items-start my-5">
               <div className="flex-1 min-w-0 mr-2">
                 <p className="text-3xl font-bold wrap-break-word">{note.title}</p>
               </div>
@@ -66,11 +66,11 @@ const ViewNote = () => {
             </div>
           </div>
 
-          <div className="my-9">
+          <div className="my-3 flex-1 max-h-72 overflow-y-auto">
             <p className="text-xl wrap-break-word">{note.content}</p>
           </div>
 
-          <div className="flex justify-between my-7">
+          <div className="flex justify-between mt-5">
             <button
               className="flex text-2xl gap-4 font-semibold items-center text-violet-500 border-2 py-3 px-6 rounded-xl cursor-pointer"
               onClick={handleEdit}
