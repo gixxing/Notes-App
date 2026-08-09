@@ -17,16 +17,16 @@ const NoteCard = ({ note, deletedCard}) => {
         className={`w-full ${NOTE_COLORS[note.color]} rounded-xl h-full flex sm:flex-col justify-between relative`}
         onClick={() => !deletedCard && dispatch(openView(note.id))}
       >
-        <div className="flex flex-1 flex-col overflow-hidden sm:mx-5 my-3 gap-4">
-          <div className="p-3 flex justify-between items-center">
-            <div className="font-bold py-3.5 flex-1 min-w-0">
-              <p className="truncate sm:overflow-visible sm:whitespace-normal sm:wrap-break-word text-gray-700">
+        <div className="flex flex-1 flex-col px-4 sm:px-0 overflow-hidden sm:mx-5 my-3 gap-4">
+          <div className="py-3 flex justify-between gap-2 items-center sm:items-start">
+            <div className="font-bold flex-1 min-w-0">
+              <p className="truncate text-gray-700">
                 {note.title}
               </p>
             </div>
             {note.pinned && (
               <button
-                className={`cursor-pointer ${note.pinned ? "text-violet-500" : "text-black"}`}
+                className={`cursor-pointer pt-1 ${note.pinned ? "text-violet-500" : "text-black"}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMenu(false);
@@ -39,7 +39,13 @@ const NoteCard = ({ note, deletedCard}) => {
           </div>
 
           <div className="hidden sm:block">
-            <p className="wrap-break-word text-gray-700">{note.content}</p>
+            <p className="wrap-break-word text-gray-700">
+              {
+                note.content.length > 100
+                ? note.content.slice(0, 100) + " ..."
+                : note.content
+              }
+            </p>
           </div>
         </div>
 
