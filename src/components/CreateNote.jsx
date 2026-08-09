@@ -84,18 +84,25 @@ const CreateNote = () => {
               type="text"
               placeholder="title"
               value={title}
+              maxLength={50}
               className="w-full border-2 rounded-md border-gray-300 py-1 px-2 my-1 focus:outline-none focus:ring-1 focus:border-violet-500"
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="w-11/12 dark:text-gray-300">
+          <div className="w-11/12 relative border-2 rounded-md border-gray-300 focus:ring-1 focus:border-violet-500 dark:text-gray-300">
             <textarea
               rows="8"
               placeholder="content"
+              maxLength={500}
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full border-2 rounded-md border-gray-300 py-1 px-2 my-1 focus:outline-none focus:ring-1 focus:border-violet-500"
+              className="w-full resize-none border-none py-1 px-2 my-1 focus:outline-none"
             ></textarea>
+            <div
+              className={`flex justify-end mx-3 ${content.length > 400 ? "text-red-500" : "text-green-500"}`}
+            >
+              {content.length}/500
+            </div>
           </div>
 
           <div className="flex items-center justify-between w-11/12 px-1 my-2">
