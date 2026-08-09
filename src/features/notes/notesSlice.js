@@ -36,6 +36,13 @@ const notesSlice = createSlice({
       }
     },
 
+    deleteAllNotes: (state) => {
+      state.notes.forEach((note) => {
+        note.isDeleted = true;
+        note.pinned = false;
+      });
+    },
+
     deletePermanently: (state, action) => {
       state.notes = state.notes.filter((note) => note.id !== action.payload)
     },
@@ -66,6 +73,7 @@ export const {
   setPinned,
   restoreNote,
   deletePermanently,
+  deleteAllNotes,
  } = notesSlice.actions;
 
 export default notesSlice.reducer;
