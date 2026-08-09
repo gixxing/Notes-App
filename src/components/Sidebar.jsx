@@ -9,6 +9,11 @@ function Sidebar() {
   const isSidebarOpen = useSelector((state) => state.ui.isSidebarOpen);
   const dispatch = useDispatch();
 
+  const notes = useSelector((state) => state.notes.notes);
+  const notesCount = notes.filter((note) => !note.isDelted).length;
+  const pinnedCount = notes.filter((note) => note.pinned && !note.isDeleted).length;
+  const trashCount = notes.filter((note) => note.isDeleted).length;
+
   return (
     <div className="flex justify-between flex-col w-full gap-4 ">
       {isSidebarOpen && (
@@ -22,7 +27,7 @@ function Sidebar() {
           <p className="text-xl font-semibold">Notes App</p>
         </div>
       )}
-      <div className="flex items-center p-2 sm:my-2 px-8 ">
+      <div className="flex items-center justify-between gap-2 p-2 sm:my-2 px-8 ">
         <NavLink 
           to={'/'}
           onClick={() => dispatch(closeSidebar())}
@@ -32,8 +37,11 @@ function Sidebar() {
         >
           All Notes
         </NavLink>
+        <p className='dark:text-gray-400'>
+          {notesCount}
+        </p>
       </div>
-      <div className="flex items-center p-2 sm:my-2 px-8 ">
+      <div className="flex items-center justify-between p-2 sm:my-2 px-8">
         <NavLink 
           to={'pinned'}
           onClick={() => dispatch(closeSidebar())}
@@ -43,8 +51,11 @@ function Sidebar() {
         >
           Pinned
         </NavLink>
+        <p className='dark:text-gray-400'>
+          {pinnedCount}
+        </p>
       </div>
-      <div className="flex items-center p-2 sm:my-2 px-8 ">
+      <div className="flex items-center justify-between p-2 sm:my-2 px-8 ">
         <NavLink 
           to={'trash'}
           onClick={() => dispatch(closeSidebar())}
@@ -54,6 +65,9 @@ function Sidebar() {
         >
           Trash
         </NavLink>
+        <p className='dark:text-gray-400'>
+          {trashCount}
+        </p>
       </div>
       
     </div>
