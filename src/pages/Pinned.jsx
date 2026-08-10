@@ -1,4 +1,3 @@
-import React from 'react'
 import {Notes} from '../components/Notes'
 import { PinOff } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,8 +9,6 @@ const Pinned = () => {
   const pinnedNotes = notes.filter( (note) => 
     note.pinned 
     && !note.isDeleted);
-
-  const dispatch = useDispatch();
 
   return (
     <div className='w-full flex flex-1 flex-col relative '>

@@ -1,6 +1,6 @@
 import { ArchiveRestore, EllipsisVertical, Pencil, Pin, Trash2 } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { openEditing, openView } from "../features/ui/uiSlice";
 import { deleteNote, deletePermanently, restoreNote, setPinned } from "../features/notes/notesSlice";
 import { NOTE_COLORS } from "../constants/noteColors";

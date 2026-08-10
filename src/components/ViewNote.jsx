@@ -1,5 +1,4 @@
 import { CalendarDays, Pencil, Pin, Trash2, X } from "lucide-react";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeView, openEditing } from "../features/ui/uiSlice";
 import { deleteNote, setPinned } from "../features/notes/notesSlice";

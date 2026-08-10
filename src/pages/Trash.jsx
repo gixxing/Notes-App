@@ -1,4 +1,3 @@
-import React from 'react'
 import {Notes} from '../components/Notes'
 import { Trash2 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'

@@ -1,6 +1,4 @@
-import React from 'react'
 import NoteCard from './NoteCard'
-import { useSelector } from 'react-redux'
 
 export const Notes = ({notes, deletedCard=false}) => {
 

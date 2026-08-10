@@ -1,5 +1,5 @@
 import { Pin, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreate, closeEditing } from "../features/ui/uiSlice";
 import { addNote, updateNote } from "../features/notes/notesSlice";

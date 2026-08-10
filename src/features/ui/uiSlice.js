@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Search } from "lucide-react";
 import { loadTheme } from "../../utils/localStorage";
 
 const initialState = {

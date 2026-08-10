@@ -1,5 +1,5 @@
-import { CircleX, Menu, Moon, NotebookText, Plus, Search, SunDim } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import { CircleX, Menu, NotebookText, Plus, Search, SunDim } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { openCreate, openSearch, setTheme, toggleSidebar } from '../features/ui/uiSlice';
 
@@ -18,7 +18,7 @@ function Header() {
 
   useEffect(() => {
     dispatch(openSearch(searchInput));
-  }, [searchInput]);
+  }, [searchInput, dispatch]);
 
   return (
     <div className="flex items-center px-2 sm:px-5 py-4 border-b-2 dark:border-b border-gray-300 bg-white dark:bg-slate-950">
